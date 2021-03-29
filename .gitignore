@@ -1,6 +1,12 @@
-node_modules/
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-*.env
+# dependencies
+/node_modules
+
+# env files
 .env.development
-.env.production
 .env.test
+.env.production
+
+# eslintcache
+*.eslintcache
