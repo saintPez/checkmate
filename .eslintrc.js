@@ -3,6 +3,8 @@ module.exports = {
     browser: false,
     es2021: true,
     node: true,
+    jest: true,
   },
-  extends: ['eslint:recommended', 'prettier'],
+  extends: ['eslint:recommended', 'prettier', 'plugin:jest/recommended'],
+  plugins: ['jest'],
 }
