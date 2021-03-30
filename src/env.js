@@ -1,4 +1,5 @@
 const environments = {
+  PORT: process.env.PORT || '3000',
   MYSQL_DATABASE: process.env.MYSQL_DATABASE || 'checkmate',
   MYSQL_USER: process.env.MYSQL_USER || 'root',
   MYSQL_PASSWORD: process.env.MYSQL_PASSWORD || '',

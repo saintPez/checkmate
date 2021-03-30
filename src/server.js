@@ -1,13 +1,31 @@
-const { createServer } = require('http')
 const { config } = require('dotenv')
-const { Server } = require('socket.io')
-const sequelize = require('./database')
-
 config({ path: `.env.${process.env.NODE_ENV}` })
 
 const app = require('./app')
+const { sequelize } = require('./database')
+const { Server } = require('socket.io')
 
-const server = createServer(app)
+const { PORT } = require('./env')
+
+// Server
+
+const server = app.listen(PORT, async () => {
+  console.log(`> Server running on port ${PORT}`)
+})
+
+// Database
+
+sequelize
+  .sync({ force: false })
+  .then(() => {
+    console.log('> Datbase connected')
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+
+// Socket
+
 const io = new Server(server)
 
 const messages = []
@@ -17,17 +35,4 @@ io.on('connection', (socket) => {
     messages.push(message)
     socket.broadcast.emit('message', message)
   })
-})
-
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('database connected')
-  })
-  .catch((error) => {
-    console.log(error)
-  })
-
-server.listen(3000, () => {
-  console.log('listening on localhost:3000')
 })

@@ -7,6 +7,8 @@ const {
   MYSQL_HOST,
 } = require('./env')
 
+// Sequelize
+
 const sequelize = new Sequelize(MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, {
   host: MYSQL_HOST,
   dialect: 'mysql',
@@ -18,10 +20,8 @@ const sequelize = new Sequelize(MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, {
   logging: false,
 })
 
-const models = [require('./models/user')]
+// Models
 
-for (const model of models) {
-  model(sequelize)
-}
+const User = require('./models/user')(sequelize)
 
-module.exports = sequelize
+module.exports = { User, sequelize }
