@@ -10,3 +10,6 @@
 
 # eslintcache
 *.eslintcache
+
+# http
+*.http

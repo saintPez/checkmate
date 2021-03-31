@@ -20,8 +20,4 @@ const sequelize = new Sequelize(MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD, {
   logging: false,
 })
 
-// Models
-
-const User = require('./models/user')(sequelize)
-
-module.exports = { User, sequelize }
+module.exports = { sequelize }

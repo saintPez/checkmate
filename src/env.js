@@ -4,6 +4,7 @@ const environments = {
   MYSQL_USER: process.env.MYSQL_USER || 'root',
   MYSQL_PASSWORD: process.env.MYSQL_PASSWORD || '',
   MYSQL_HOST: process.env.MYSQL_HOST || 'localhost',
+  SESSION_SECRET: process.env.SESSION_SECRET || 'secret',
 }
 
 module.exports = environments
