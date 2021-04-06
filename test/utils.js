@@ -6,8 +6,10 @@ const { sequelize } = require('../src/database')
 const supertest = require('supertest')
 
 const api = supertest(app)
+const agent = supertest.agent(app)
 
 module.exports = {
   api,
   sequelize,
+  agent,
 }
