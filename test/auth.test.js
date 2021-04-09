@@ -4,13 +4,6 @@ beforeAll(() => sequelize.sync({ force: true }).then())
 
 afterAll(() => sequelize.close())
 
-describe('GENERAL TEST', () => {
-  test('GET "/"', async () => {
-    const res = await api.get('/').expect(200).expect('Content-Type', /json/)
-    expect(res.body).toEqual({})
-  })
-})
-
 describe('AUTH TEST', () => {
   test('GET "api/auth/user" without signin', () => {
     return new Promise((resolve, reject) => {
@@ -49,6 +42,7 @@ describe('AUTH TEST', () => {
         .expect(201)
         .expect('Content-Type', /json/)
         .then((res) => {
+          expect(res.body).toHaveProperty('success', true)
           expect(res.body.user).toHaveProperty('id')
           return resolve()
         })
@@ -71,6 +65,7 @@ describe('AUTH TEST', () => {
         .expect(200)
         .expect('Content-Type', /json/)
         .then((res) => {
+          expect(res.body).toHaveProperty('success', true)
           expect(res.body.user).toHaveProperty('id')
           return resolve()
         })
@@ -89,6 +84,7 @@ describe('AUTH TEST', () => {
         .expect(200)
         .expect('Content-Type', /json/)
         .then((res) => {
+          expect(res.body).toHaveProperty('success', true)
           expect(res.body.user).toHaveProperty('id')
           return resolve()
         })
