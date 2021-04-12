@@ -9,6 +9,7 @@ const MySQLStore = require('express-mysql-session')(session)
 const passport = require('passport')
 
 const authRoutes = require('./routes/auth')
+const authUsers = require('./routes/user')
 
 const {
   SESSION_SECRET,
@@ -54,6 +55,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api/auth', authRoutes)
+app.use('/api/user', authUsers)
 
 // Errors
 

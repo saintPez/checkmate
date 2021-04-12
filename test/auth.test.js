@@ -5,10 +5,10 @@ beforeAll(() => sequelize.sync({ force: true }).then())
 afterAll(() => sequelize.close())
 
 describe('AUTH TEST', () => {
-  test('GET "api/auth/user" without signin', () => {
+  test('GET "api/user" without signin', () => {
     return new Promise((resolve, reject) => {
       api
-        .get('/api/auth/user')
+        .get('/api/user')
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
         .expect(401)
@@ -75,10 +75,10 @@ describe('AUTH TEST', () => {
     })
   })
 
-  test('GET "api/auth/user" with signin', () => {
+  test('GET "api/user" with signin', () => {
     return new Promise((resolve, reject) => {
       agent
-        .get('/api/auth/user')
+        .get('/api/user')
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
         .expect(200)
