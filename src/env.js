@@ -5,6 +5,8 @@ const environments = {
   MYSQL_PASSWORD: process.env.MYSQL_PASSWORD || '',
   MYSQL_HOST: process.env.MYSQL_HOST || 'localhost',
   SESSION_SECRET: process.env.SESSION_SECRET || 'secret',
+  FACEBOOK_CLIENT_ID: process.env.FACEBOOK_CLIENT_ID || '',
+  FACEBOOK_CLIENT_SECRET: process.env.FACEBOOK_CLIENT_SECRET || '',
 }
 
 module.exports = environments

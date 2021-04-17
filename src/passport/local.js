@@ -2,7 +2,10 @@ const passport = require('passport')
 const { Strategy: LocalStrategy } = require('passport-local')
 const bcrypt = require('bcrypt')
 
+const { Op } = require('sequelize')
+
 const User = require('../models/user')
+const Provider = require('../models/provider')
 
 passport.use(
   'local-signup',
@@ -13,13 +16,20 @@ passport.use(
       passReqToCallback: true,
     },
     async (req, email, password, done) => {
-      const user = await User.findOne({ where: { email: email } })
-      if (user) return done(null, false, { message: 'Email already in use' })
-      const salt = await bcrypt.genSalt(10)
+      const provider = await Provider.findOne({ where: { provider_id: email } })
+      if (provider)
+        return done(null, false, { message: 'Email already in use' })
       const newUser = await User.create({
         email,
+        username: req.body.name,
+      })
+      const salt = await bcrypt.genSalt(10)
+      await Provider.create({
+        user_id: newUser.id,
+        provider: 'local',
+        provider_id: email,
+        name: newUser.username,
         password: await bcrypt.hash(password, salt),
-        username: req.body.username,
       })
       return done(null, newUser)
     }
@@ -34,9 +44,12 @@ passport.use(
       passwordField: 'password',
     },
     async (email, password, done) => {
-      const user = await User.findOne({ where: { email: email } })
-      if (!user || !(await bcrypt.compare(password, user?.password)))
+      const provider = await Provider.findOne({
+        where: { [Op.and]: [{ provider: 'local' }, { provider_id: email }] },
+      })
+      if (!provider || !(await bcrypt.compare(password, provider?.password)))
         return done(null, false, { message: 'Wrong email or password' })
+      const user = await User.findOne({ where: { id: provider.user_id } })
       return done(null, user)
     }
   )

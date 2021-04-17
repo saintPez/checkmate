@@ -20,6 +20,7 @@ const {
 } = require('./env')
 
 require('./passport/local')
+require('./passport/facebook')
 
 // App
 
